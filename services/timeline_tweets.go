@@ -15,10 +15,7 @@ import (
 
 func GetTimelineTweets(c *fiber.Ctx) error {
 
-	//Message: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%!d(string=)' at line 1"
-	dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %d;", c.Params("id"))
-	//WHERE followers.id_follower = %!d(string=1)
-	fmt.Print(dbQuery)
+	dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s;", c.Params("id"))
 	res, err := database.DB.Query(dbQuery)
 
 	//check for errors
@@ -44,6 +41,18 @@ func GetTimelineTweets(c *fiber.Ctx) error {
 		timelineTweets = append(timelineTweets, timelineTweet)
 	}
 	fmt.Print(timelineTweets)
+
+	if timelineTweets != nil {
+		c.Status(200).JSON(&fiber.Map{
+			"success": true,
+			"tweets":  timelineTweets,
+		})
+	} else {
+		c.Status(404).JSON(&fiber.Map{
+			"success": false,
+			"error":   "No tweets found",
+		})
+	}
 
 	return nil
 }
