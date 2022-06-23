@@ -14,7 +14,7 @@ import (
 
 
 func GetTimelineTweets(c *fiber.Ctx) error {
-
+	//TODO: pagination w/ limit n offset
 	dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s;", c.Params("id"))
 	res, err := database.DB.Query(dbQuery)
 

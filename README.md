@@ -1,5 +1,6 @@
 # goexample  
-
+  
+  
 1. Write a database schema for creating the tables in a MariaDB/MySQL database with users, tweets, and followers.  
 
 1.1 A user has a username, password, email, first name, last name, and age.  
