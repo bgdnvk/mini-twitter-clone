@@ -2,22 +2,14 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
-	"log"
 	"encoding/json"
+	"fmt"
+	"goexample/models"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type User struct {
-	id         int
-	user       string
-	passhash  string
-	email      string
-	first_name  string
-	last_name  string
-	dob		string
-}
 
 
 func main() {
@@ -39,12 +31,16 @@ func main() {
 
 	defer res.Close()
 
-	var users []User
+	var users []models.User
 
+	
 	for res.Next() {
+		
+		
+		user := models.User{}
 
-		var user User
-		err := res.Scan(&user.id, &user.user, &user.passhash, &user.email, &user.first_name, &user.last_name, &user.dob)
+		// err := res.Scan(&user.id, &user.user, &user.passhash, &user.email, &user.first_name, &user.last_name, &user.dob)
+		err := res.Scan( &user.Id, &user.User, &user.Passhash, &user.Email, &user.First_name, &user.Last_name, &user.Dob)
 
 
 		if err != nil {
