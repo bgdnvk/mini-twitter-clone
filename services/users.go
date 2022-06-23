@@ -12,12 +12,9 @@ import(
 //get all users from db
 func GetUsers(c *fiber.Ctx) error {
 
+	//get the users from db
 	res, err := database.DB.Query("SELECT * FROM users")
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
+	//check for errors
 	if err != nil {
 		c.Status(500).JSON(&fiber.Map{
 			"success": false,
@@ -25,11 +22,11 @@ func GetUsers(c *fiber.Ctx) error {
 		  })
 		return nil
 	}
-
+	//close the result set
 	defer res.Close()
-
+	//create a slice of users
 	var users []models.User
-
+	//loop through the result set
 	for res.Next() {
 
 		user := models.User{}
@@ -39,13 +36,15 @@ func GetUsers(c *fiber.Ctx) error {
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		//best logger amirite
 		fmt.Printf("%v\n", user)
 		//storing the data in a slice
 		users = append(users, user)
 	}
 
-	fmt.Printf("%v\n", users)
+	// fmt.Printf("%v\n", users)
+	
+	//send the users to the client
 	if users != nil {
 		c.Status(200).JSON(&fiber.Map{
 			"success": true,
@@ -58,14 +57,4 @@ func GetUsers(c *fiber.Ctx) error {
 		})}
 
 	return nil
-
-	// json_data, err := json.Marshal(users)
-
-	// if  err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Printf("%v\n", json.Unmarshal(json_data, &users))
-
-	
 }
