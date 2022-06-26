@@ -8,6 +8,8 @@ import (
 	// "database/sql"
 	"fmt"
 
+	"goexample/services/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -16,13 +18,17 @@ func GetTweets(c *fiber.Ctx) error {
 	//get the tweets from db
 	res, err := database.DB.Query("SELECT * FROM tweets")
 	//check for errors
+	// if err != nil {
+	// 	c.Status(500).JSON(&fiber.Map{
+	// 		"success": false,
+	// 		"error":   err,
+	// 	})
+	// 	return nil
+	// }
 	if err != nil {
-		c.Status(500).JSON(&fiber.Map{
-			"success": false,
-			"error":   err,
-		})
-		return nil
+		return utils.DefaultErrorHandler(c, err)
 	}
+
 	//close the result set
 	defer res.Close()
 	//create a slice of tweets
@@ -46,19 +52,18 @@ func GetTweets(c *fiber.Ctx) error {
 	// fmt.Printf("%v\n", tweets)
 
 	//send the tweets to the client
-	if tweets != nil {
-		c.Status(200).JSON(&fiber.Map{
-			"success": true,
-			"tweets":  tweets,
-		})
-	} else {
-		c.Status(404).JSON(&fiber.Map{
-			"success": false,
-			"error":   "No tweets found",
-		})
-	}
+	// if tweets != nil {
+	// 	c.Status(200).JSON(&fiber.Map{
+	// 		"success": true,
+	// 		"tweets":  tweets,
+	// 	})
+	// } else {
+	// 	c.Status(404).JSON(&fiber.Map{
+	// 		"success": false,
+	// 		"error":   "No tweets found",
+	// 	})
+	// }
+	utils.ResponseHelperJSON(c, tweets, "tweets", "No tweets found")
 
-	return nil
+	return err
 }
-
-

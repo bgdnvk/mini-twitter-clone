@@ -4,9 +4,10 @@ import (
 	"goexample/services"
 
 	"github.com/gofiber/fiber/v2"
-
 	// "fmt"
 )
+
+//http://localhost:3000/api/timeline/1
 
 func SetupRoutes(app *fiber.App) {
 
@@ -16,4 +17,7 @@ func SetupRoutes(app *fiber.App) {
 
 	api.Get("/timeline/:id", services.GetTimelineTweets)
 	//TODO: pagination
+
+	//users with age
+	api.Get("/users/age", services.GetUsersByAgeAsc)
 }

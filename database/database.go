@@ -14,10 +14,12 @@ func Connect() error{
 
 	if err != nil {
 		log.Fatal(err)
+		return err
 	}
 
 	if err = DB.Ping(); err != nil {
 		log.Fatal(err)
+		return err
 	}
 
 	fmt.Println("Connected to database")

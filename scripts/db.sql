@@ -32,12 +32,16 @@ CREATE TABLE followers (
 );
 
 INSERT INTO users (user, passhash, email, first_name, last_name, dob) VALUES
-("foo", "asdsad", "test@gmail.com", "bob", "bobbinson", "1991-01-01"),
-("foo2", "asdsad", "test2@gmail.com", "bob2", "bobbinson2", "1992-01-01"),
-("foo3", "asdsad", "test3@gmail.com", "bob3", "bobbinson3", "1993-01-01"),
-("foo4", "asdsad", "test4@gmail.com", "bob4", "bobbinson4", "1994-01-01"),
-("foo5", "asdsad", "test5@gmail.com", "bob5", "bobbinson5", "1995-01-01"),
-("foo6", "asdsad", "test5@gmail.com", "bob6", "bobbinson6", "1996-01-01");
+("foo", "asdsad1", "test@gmail.com", "bob", "bobbinson", "2006-01-01"),
+("foo2", "asdsad2", "test2@gmail.com", "bob2", "bobbinson2", "1992-01-01"),
+("foo3", "asdsad3", "test3@gmail.com", "bob3", "bobbinson3", "1993-01-01"),
+("foo4", "asdsad4", "test4@gmail.com", "bob4", "bobbinson4", "1994-01-01"),
+("foo5", "asdsad5", "test5@gmail.com", "bob5", "bobbinson5", "1995-01-01"),
+("foo6", "asdsad6", "test6@gmail.com", "bob6", "bobbinson6", "1996-01-01"),
+("foo7", "asdsad7", "test7@gmail.com", "bob7", "bobbinson7", "1925-01-01"),
+("foo8", "asdsad8", "test8@gmail.com", "bob8", "bobbinson8", "1980-01-01"),
+("foo9", "asdsad9", "test9@gmail.com", "bob9", "bobbinson9", "1980-01-01"),
+("foo10", "asdsad10", "test10@gmail.com", "bob10", "bobbinson10", "1970-01-01");
 
 INSERT INTO tweets(user_id, tweet, date_tweet) VALUES
 (1, "test tweet", "2001-01-01 22:00:00"),
