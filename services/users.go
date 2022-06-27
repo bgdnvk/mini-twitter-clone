@@ -1,13 +1,11 @@
 package services
 
 import (
+	"fmt"
 	"goexample/database"
 	"goexample/models"
-	"log"
-
-	// "database/sql"
-	"fmt"
 	"goexample/services/utils"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -44,7 +42,11 @@ func GetUsers(c *fiber.Ctx) error {
 		users = append(users, user)
 	}
 
-	// fmt.Printf("%v\n", users)
+	//--user helper sort by age
+	fmt.Printf("\nNON SORTED USERS: %v\n", users)
+	sortedUsers := utils.SortUsersByAge(users)
+	fmt.Printf("SORTED USERS: %v\n", sortedUsers)
+	//--irrelevant to the call
 
 	//send the users to the client
 	utils.ResponseHelperJSON(c, users, "users", "No users found")
@@ -80,7 +82,8 @@ func GetUsersByAgeAsc(c *fiber.Ctx) error {
 		//storing the data in a slice
 		users = append(users, user)
 	}
-	//testing the new func
+	//-----------
+	//user helper functions
 	utils.AtLeastTwice(users)
 	utils.AtLEastTwiceAlt(users)
 	utils.ExactlyTwice(users)
@@ -91,8 +94,8 @@ func GetUsersByAgeAsc(c *fiber.Ctx) error {
 
 	//binary search
 	utils.ConstrainedExactlyTwice(usersWithinLimits)
+	//-----------
 
-	//----end tests
 	utils.ResponseHelperJSON(c, users, "users", "No users found")
 
 	return err

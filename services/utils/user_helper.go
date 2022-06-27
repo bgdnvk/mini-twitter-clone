@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"goexample/models"
+	"sort"
 )
 
 //Write a utility function for a User object. You will be implementing
@@ -17,9 +18,9 @@ func AtLeastTwice(users []models.UserWithAge) bool {
 	fmt.Printf("Inside AtLEastTwice with users: %v\n", users)
 
 	for i := 0; i < len(users); i++ {
-		fmt.Printf("checking user I: %v\n", users[i])
+		// fmt.Printf("checking user I: %v\n", users[i])
 		for j := i + 1; j < len(users); j++ {
-			fmt.Printf("checking user J: %v\n", users[j])
+			// fmt.Printf("checking user J: %v\n", users[j])
 			if users[i].Age*2 <= users[j].Age {
 				fmt.Printf("ZOOMER: %v\n", users[i])
 				fmt.Printf("BOOMER: %v\n", users[j])
@@ -37,9 +38,9 @@ func AtLEastTwiceAlt(users []models.UserWithAge) bool {
 	fmt.Printf("Inside AtLEastTwiceAlt with users: %v\n", users)
 
 	for _, s := range users {
-		fmt.Printf("checking user: %v\n", s)
+		// fmt.Printf("checking user: %v\n", s)
 		for _, t := range users {
-			fmt.Printf("checking user: %v\n", t)
+			// fmt.Printf("checking user: %v\n", t)
 			if s.Age*2 <= t.Age {
 				fmt.Printf("ZOOMER: %v\n", s)
 				fmt.Printf("BOOMER: %v\n", t)
@@ -58,9 +59,9 @@ func ExactlyTwice(users []models.UserWithAge) bool {
 	fmt.Printf("Inside ExactlyTwice with users: %v\n", users)
 
 	for i := 0; i < len(users); i++ {
-		fmt.Printf("checking user I: %v\n", users[i])
+		// fmt.Printf("checking user I: %v\n", users[i])
 		for j := 0; j < len(users); j++ {
-			fmt.Printf("checking user J: %v\n", users[j])
+			// fmt.Printf("checking user J: %v\n", users[j])
 			if users[i].Age == users[j].Age*2 {
 				fmt.Printf("user who is exactly twice younger is: %v\n", users[j])
 				fmt.Printf("user who is exactly double age is: %v\n", users[i])
@@ -85,7 +86,7 @@ func ConstrainedExactlyTwice(users []models.UserWithAge) bool {
 
 	for i, s := range users {
 		fmt.Printf("checking user I: %v\n", s)
-		//since the binary search checks by age 
+		//since the binary search checks by age
 		//specify the target age as the second parameter
 		return BinarySearchAge(users[i+1:], s.Age*2)
 	}
@@ -126,11 +127,28 @@ func GetUsersWithinLimits(users []models.UserWithAge, limit1 int, limit2 int) []
 
 	var usersWithinLimits []models.UserWithAge
 	for _, s := range users {
-		fmt.Printf("checking user: %v\n", s)
+		// fmt.Printf("checking user: %v\n", s)
 		//append to slice if age is within limits
 		if s.Age >= limit1 && s.Age <= limit2 {
 			usersWithinLimits = append(usersWithinLimits, s)
 		}
 	}
 	return usersWithinLimits
+}
+
+//sort unordered slice by age
+//implemented in services/users@L49
+func SortUsersByAge(users []models.User) []models.User {
+	fmt.Println("------------------------------")
+	fmt.Printf("Inside sortUsersByAge with users: %v\n", users)
+
+	sort.Slice(users, func(i, j int) bool {
+		return users[i].Dob > users[j].Dob
+	})
+
+	// for _, s := range users {
+	// 	fmt.Printf("sorted user: %v\n", s)
+	// }
+	return users
+
 }
