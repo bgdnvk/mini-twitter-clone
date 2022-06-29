@@ -1,4 +1,4 @@
-# goexample  
+# Mini Twitter Clone  
   
   
 1. Write a database schema for creating the tables in a MariaDB/MySQL database with users, tweets, and followers.  
