@@ -57,7 +57,6 @@ func GetUsers(c *fiber.Ctx) error {
 func GetUsersByAgeAsc(c *fiber.Ctx) error {
 	//get the users from db
 	res, err := database.DB.Query("SELECT user_id, user, passhash, email, first_name, last_name, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age FROM users ORDER BY age ASC")
-	// res, err := database.DB.Query("SELECT user, dob FROM users")
 
 	if err != nil {
 		return utils.DefaultErrorHandler(c, err)

@@ -13,8 +13,12 @@ import (
 func GetFeedTweets(c *fiber.Ctx) error {
 
 	//you shouldn't do this by the way, but it's just a demo
-	dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s ORDER BY tweets.date_tweet DESC;", c.Params("id"))
-	rows, err := database.DB.Query(dbQuery)
+	// dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s ORDER BY tweets.date_tweet DESC;", c.Params("id"))
+	// rows, err := database.DB.Query(dbQuery)
+
+	//avoid the SQL injection by rewriting it like
+	dbQuery := "SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = ? ORDER BY tweets.date_tweet DESC;"
+	rows, err := database.DB.Query(dbQuery, c.Params("id"))
 
 	//check for errors
 	if err != nil {
