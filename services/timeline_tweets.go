@@ -47,9 +47,11 @@ func GetFeedTweets(c *fiber.Ctx) error {
 
 func GetFeedTweetsPaginated(c *fiber.Ctx) error {
 
-	dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s ORDER BY tweets.date_tweet DESC LIMIT %s OFFSET %s;", c.Params("id"), c.Params("limit"), c.Params("offset"))
+	// dbQuery := fmt.Sprintf("SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = %s ORDER BY tweets.date_tweet DESC LIMIT %s OFFSET %s;", c.Params("id"), c.Params("limit"), c.Params("offset"))
+	// avoid a SQL injection by rewriting it like
+	dbQuery := "SELECT users.user_id, users.user, users.first_name, users.last_name, tweets.tweet, tweets.date_tweet FROM users INNER JOIN tweets ON users.user_id = tweets.user_id INNER JOIN followers ON users.user_id = followers.id_user WHERE followers.id_follower = ? ORDER BY tweets.date_tweet DESC LIMIT ? OFFSET ?;"
 
-	rows, err := database.DB.Query(dbQuery)
+	rows, err := database.DB.Query(dbQuery, c.Params("id"), c.Params("limit"), c.Params("offset"))
 	if err != nil {
 		return utils.DefaultErrorHandler(c, err)
 	}
