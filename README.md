@@ -3,7 +3,8 @@
   
 ## Disclaimer
 This is an introductory project to look at Golang a bit.  
-This project is not production ready and it has bad practices like the way pagination works or how we interact with the database. It was mainly made for the blog post that you will find here:
+This project is not production ready and it has bad practices like the way pagination works or how we interact with the database. It was mainly made for the blog post that you will find here:  
+https://bognov.tech/introduction-to-golang-build-a-mini-twitter-clone#heading-bonus-ukrainian-meme
 
 Through the codebase you will find different "prints" that are used to debug the project, feel free to play with them.
 
